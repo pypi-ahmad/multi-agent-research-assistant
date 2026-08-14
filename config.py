@@ -29,6 +29,10 @@ OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 AVAILABLE_LOCAL_MODELS = ["llama3.1:8b", "qwen2.5:7b"]
 DEFAULT_LOCAL_MODEL = AVAILABLE_LOCAL_MODELS[0]
 
+# a stuck local model or a hung API call must never freeze the whole run
+REASONING_TIMEOUT_SECONDS = 60
+OLLAMA_TIMEOUT_SECONDS = 90
+
 # depth -> (# sub-questions, sources fetched per sub-question, max critic
 # revision loops, hard ceiling on total researcher rounds)
 DEPTH_PRESETS: dict[str, dict[str, int]] = {

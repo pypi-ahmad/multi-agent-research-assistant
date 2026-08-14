@@ -14,13 +14,18 @@ query, its sub-questions, and the sources gathered so far (with summaries and \
 credibility scores). Judge whether the research is sufficient to write a \
 trustworthy report, note any gaps that still need dedicated research, and flag \
 any conflicting information between sources. Be specific: gaps should be phrased \
-as researchable sub-questions."""
+as researchable sub-questions. Also identify, by their [n] index, any sources \
+that are off-topic or irrelevant to the query - these will be dropped from the \
+report entirely, so only flag ones a careful editor would actually cut."""
 
 
 class CritiqueOutput(BaseModel):
     sufficient: bool = Field(description="True if the gathered sources adequately cover all sub-questions")
     gaps: list[str] = Field(default_factory=list, description="Specific sub-questions still needing research")
     conflicting_info: list[str] = Field(default_factory=list, description="Contradictions found between sources")
+    irrelevant_indices: list[int] = Field(
+        default_factory=list, description="1-based [n] indices of sources that are off-topic and should be dropped"
+    )
     notes: str = Field(description="Short overall assessment of research quality")
 
 
@@ -71,8 +76,12 @@ def critic_node(state: ResearchState) -> dict:
             "sufficient": True,  # fail open so the run can still reach a report
             "gaps": [],
             "conflicting_info": [],
+            "irrelevant_indices": [],
             "notes": f"Critic model unavailable ({exc}); proceeding with sources as gathered.",
         }
         return {"sources": sources, "critique": critique, "errors": [f"critic: {exc}"]}
 
-    return {"sources": sources, "critique": critique}
+    drop = {i - 1 for i in critique.get("irrelevant_indices", []) if 1 <= i <= len(sources)}
+    filtered_sources = [s for idx, s in enumerate(sources) if idx not in drop]
+
+    return {"sources": filtered_sources, "critique": critique}

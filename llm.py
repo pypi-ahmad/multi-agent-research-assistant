@@ -20,6 +20,7 @@ def get_reasoning_llm(provider: str = "OpenAI GPT", temperature: float = 0.2) ->
             base_url=config.AGNES_BASE_URL,
             api_key=config.AGNES_API_KEY,
             temperature=temperature,
+            timeout=config.REASONING_TIMEOUT_SECONDS,
         )
 
     if not config.OPENAI_API_KEY:
@@ -31,13 +32,20 @@ def get_reasoning_llm(provider: str = "OpenAI GPT", temperature: float = 0.2) ->
         base_url=config.OPENAI_BASE_URL,
         api_key=config.OPENAI_API_KEY,
         temperature=temperature,
+        timeout=config.REASONING_TIMEOUT_SECONDS,
     )
 
 
 def get_local(model_name: str, temperature: float = 0.3) -> ChatOllama:
-    """Researcher model: cheap local summarization/drafting via Ollama."""
+    """Researcher model: cheap local summarization/drafting via Ollama.
+
+    A stuck or overloaded local model must not hang the whole research run,
+    so requests are bounded and the caller (researcher_node) falls back to
+    the raw snippet on any failure, including a timeout.
+    """
     return ChatOllama(
         model=model_name,
         base_url=config.OLLAMA_BASE_URL,
         temperature=temperature,
+        client_kwargs={"timeout": config.OLLAMA_TIMEOUT_SECONDS},
     )
