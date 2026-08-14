@@ -2,6 +2,8 @@
 
 A LangGraph multi-agent system that researches any topic and produces a structured, cited report — with a Streamlit UI on top.
 
+**Repository:** https://github.com/pypi-ahmad/multi-agent-research-assistant
+
 ## Features
 
 - **Five-agent LangGraph pipeline**: Planner → Researcher (parallel) → Critic → Reflector → Writer, with a safety-bounded critique/re-research loop.
