@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+data/history.json
+.streamlit/secrets.toml
+
+# local tool caches / indexes, not part of the project
+.ruff_cache/
+.code-review-graph/
+.codegraph/
+.claude/
