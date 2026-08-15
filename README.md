@@ -133,6 +133,6 @@ Set in `config.py` / overridable via environment variables:
 
 ## License
 
-No license file is included; add one if you intend to distribute this project.
+[MIT](LICENSE)
 
 <p align="center">Made with ❤️ by Ahmad Mujtaba</p>
