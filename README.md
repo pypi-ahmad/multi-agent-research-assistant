@@ -2,7 +2,13 @@
 
 A LangGraph multi-agent system that researches any topic and produces a structured, cited report — with a Streamlit UI on top.
 
+![License: MIT](https://img.shields.io/badge/license-MIT-yellow)
+![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)
+![Local-first](https://img.shields.io/badge/runs-locally-green)
+
 **Repository:** https://github.com/pypi-ahmad/multi-agent-research-assistant
+
+This project is free, open-source, and community-driven. It runs entirely on your own machine with your own API keys — cloning it, testing it, filing bugs, suggesting features, and sending pull requests are all genuinely welcome. See [Contributing](#contributing) below.
 
 ## Features
 
@@ -133,6 +139,18 @@ Set in `config.py` / overridable via environment variables:
 - Streamed token-by-token report rendering instead of a single final write
 - Mid-process plan editing (currently the Critic → Reflector loop is what expands the plan, rather than live user edits)
 - Vector-store-backed retrieval for the persistent research memory
+
+## Contributing
+
+Bug reports, feature requests, doc fixes, and pull requests are all welcome — this is a community-driven project maintained on a best-effort basis, and no contribution is too small. See [CONTRIBUTING.md](CONTRIBUTING.md) to get set up, and [SUPPORT.md](SUPPORT.md) for how to ask a question or report an issue.
+
+## Disclaimer & Data Responsibility
+
+Everything this app processes — your research queries, uploaded PDFs, and generated reports — is **100% your responsibility**. It runs on your own machine with your own API keys; nothing is sent anywhere except to whichever provider you've configured (an OpenAI-compatible API, Agnes AI, and/or your own local Ollama), plus DuckDuckGo/arXiv for search. Research history is stored locally and unencrypted in `data/history.json`. Please read the full [DISCLAIMER.md](DISCLAIMER.md) before using this with anything sensitive, and see [SECURITY.md](SECURITY.md) to report a vulnerability privately.
+
+## Support the Project
+
+If you find this useful, the best ways to support it are to **use it, report bugs, suggest features, or contribute code** — see [Contributing](#contributing) above. This project does **not** want or accept donations, sponsorships, or any other financial support. It's shared freely because it's useful, not for profit.
 
 ## License
 
