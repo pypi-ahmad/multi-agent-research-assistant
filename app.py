@@ -242,7 +242,7 @@ def main() -> None:
         followup = st.text_input("Ask a follow-up to dig deeper on the same topic")
         if st.button("Continue Research", disabled=not followup.strip()):
             prior = st.session_state.active_result
-            previous_context = prior.get("final_report", "")[:2000]
+            previous_context = memory.summarize_for_followup({"report": prior.get("final_report", "")})
             try:
                 result = run_research(
                     followup.strip(), prior.get("depth", "Standard"), prior.get("local_model", local_model),
