@@ -10,6 +10,23 @@ A LangGraph multi-agent system that researches any topic and produces a structur
 
 This project is free, open-source, and community-driven. It runs entirely on your own machine with your own API keys — cloning it, testing it, filing bugs, suggesting features, and sending pull requests are all genuinely welcome. See [Contributing](#contributing) below.
 
+## Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Installation & Setup](#installation--setup)
+- [Environment Variables](#environment-variables)
+- [Usage](#usage)
+- [How It Works (Architecture)](#how-it-works-architecture)
+- [Configuration Options](#configuration-options)
+- [Future Improvements](#future-improvements)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [Disclaimer & Data Responsibility](#disclaimer--data-responsibility)
+- [Support the Project](#support-the-project)
+- [License](#license)
+
 ## Features
 
 - **Five-agent LangGraph pipeline**: Planner → Researcher (parallel) → Critic → Reflector → Writer, with a safety-bounded critique/re-research loop.
@@ -139,6 +156,18 @@ Set in `config.py` / overridable via environment variables:
 - Streamed token-by-token report rendering instead of a single final write
 - Mid-process plan editing (currently the Critic → Reflector loop is what expands the plan, rather than live user edits)
 - Vector-store-backed retrieval for the persistent research memory
+
+## Documentation
+
+| Document | Purpose |
+|---|---|
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Cited technical deep-dive: tech stack, subsystems, data flow, and inferred design decisions |
+| [USAGE.md](USAGE.md) | Step-by-step walkthrough of the app, plus a troubleshooting table |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to set up a dev environment and submit a change |
+| [SECURITY.md](SECURITY.md) | How to report a vulnerability privately |
+| [SUPPORT.md](SUPPORT.md) | Where to get help and what response time to expect |
+| [DISCLAIMER.md](DISCLAIMER.md) | Data responsibility, no-warranty, and no-financial-relationship terms |
+| [LICENSE](LICENSE) | MIT license terms |
 
 ## Contributing
 
