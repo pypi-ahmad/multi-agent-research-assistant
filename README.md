@@ -10,6 +10,7 @@ A LangGraph multi-agent system that researches any topic and produces a structur
 - **Hybrid model routing**: cheap local Ollama models do per-source summarization; a hosted reasoning model (OpenAI GPT or [Agnes 2.5 Flash](https://www.agnes-ai.com/en/docs/agnes-25-flash), user-selectable) handles planning, critique, and final synthesis.
 - **Multi-source research**: DuckDuckGo web search, arXiv search, and optional PDF upload, all funneled through the same source pipeline.
 - **Deterministic credibility scoring**: every source gets an authority / relevance / recency / trust score from heuristics (domain reputation, lexical overlap, publish date) — never asked of an LLM, so it can't be hallucinated.
+- **Off-topic source filtering**: the Critic flags sources that don't actually address the query and drops them entirely before the report is written.
 - **Hallucination-resistant references**: the model cites sources by number from a fixed list; the References section itself is assembled from code, not generated text, so a link in the report always traces back to something actually retrieved.
 - **Safety-bounded research loop**: depth preset caps both critic revisions and total researcher rounds, so the Critic → Researcher loop always terminates.
 - **Persistent research memory**: every run is saved to a local JSON store; browse, reload, or continue past sessions from the sidebar.
@@ -111,7 +112,7 @@ START → Planner → [Researcher × N sub-questions, parallel] → Critic → R
 
 1. **Planner** (reasoning model) turns the query into 2–6 sub-questions (count set by depth) and stores depth-derived limits (`max_revisions`, `max_steps`) in state.
 2. **Researcher** runs once per sub-question via LangGraph's `Send` API — a true parallel fan-out, each branch searching the web and arXiv, then summarizing hits with the local Ollama model. Results merge back into state via an `operator.add` reducer.
-3. **Critic** deduplicates and scores every source deterministically (`tools/credibility.py`), then asks the reasoning model whether the research is sufficient and whether sources conflict.
+3. **Critic** deduplicates and scores every source deterministically (`tools/credibility.py`), then asks the reasoning model whether the research is sufficient, whether sources conflict, and which sources (if any) are off-topic and should be dropped before the report is written.
 4. **Reflector** is plain Python, not an LLM call: it checks the critic's verdict against `max_revisions` / `max_steps` and decides to loop back to Researcher with the critic's gap sub-questions, or proceed to Writer. This guarantees the loop terminates regardless of model behavior.
 5. **Writer** drafts the report body (Executive Summary → Key Findings → Detailed Analysis → Limitations → Conclusion) citing sources as `[n]`; the References section is then appended in code from the scored source list, so every citation is traceable to a real, retrieved source.
 
@@ -124,6 +125,8 @@ Set in `config.py` / overridable via environment variables:
 - `AVAILABLE_LOCAL_MODELS` — Ollama models offered in the UI (default `llama3.1:8b`, `qwen2.5:7b`)
 - `DEPTH_PRESETS` — per-depth sub-question count, sources per sub-question, max critic revisions, and max researcher steps
 - `MIN_TRUST_SCORE` — minimum credibility score for a source to be cited in the final report (default `3.0`)
+- `REASONING_TIMEOUT_SECONDS` — request timeout for the planner/critic/writer reasoning model (default `60`)
+- `OLLAMA_TIMEOUT_SECONDS` — request timeout for the local researcher-side Ollama model (default `90`)
 
 ## Future Improvements
 
