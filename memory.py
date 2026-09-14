@@ -40,6 +40,12 @@ def save_session(
     report: str,
     session_id: str | None = None,
 ) -> str:
+    """Create or replace a session (upsert by id) and return its id.
+
+    Passing an existing session_id drops that entry and re-appends the
+    updated version at the end of the list, so continuing a session (a
+    follow-up) moves it to most-recent rather than duplicating it.
+    """
     _ensure_store()
     sessions = [s for s in load_all_sessions() if s["id"] != session_id]
     sid = session_id or str(uuid.uuid4())

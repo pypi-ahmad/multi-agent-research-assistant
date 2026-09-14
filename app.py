@@ -64,6 +64,10 @@ def run_research(
         uploaded_pdf_text=pdf_text, previous_context=previous_context,
     )
     if pdf_text:
+        # Seeded into research_results before the graph runs, so it flows
+        # through critic_node's normal dedupe/scoring (score_source sees
+        # url="uploaded://document.pdf" -> falls back to DEFAULT_AUTHORITY)
+        # exactly like any web/arXiv source, rather than being special-cased.
         state["research_results"].append(
             {
                 "subquestion": "user-uploaded document",
@@ -162,6 +166,9 @@ def main() -> None:
     sessions = sorted(memory.load_all_sessions(), key=lambda s: s["timestamp"], reverse=True)
     if not sessions:
         st.sidebar.caption("No past research yet.")
+    # `key=` must be unique per widget across the whole rerun; without the
+    # session id suffix, every "Load"/"Delete" button below would collapse
+    # into one shared widget identity and only the last session's click would work.
     for session in sessions[:20]:
         ts = datetime.fromisoformat(session["timestamp"]).strftime("%Y-%m-%d %H:%M")
         with st.sidebar.expander(f"{session['query'][:40]} ({ts})"):

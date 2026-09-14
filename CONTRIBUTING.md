@@ -1,13 +1,13 @@
 # Contributing
 
-Thanks for considering a contribution — this project is free, open, and community-driven, and improvements from anyone are genuinely welcome, whether that's a one-line typo fix or a new agent capability.
+Thanks for considering a contribution. This project is free, open, and community-driven, and improvements from anyone are genuinely welcome, whether that's a one-line typo fix or a new agent capability.
 
 ## Ways to contribute
 
-- **Report a bug** — see [SUPPORT.md](SUPPORT.md) and the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md).
-- **Suggest a feature** — use the [feature request template](.github/ISSUE_TEMPLATE/feature_request.md).
-- **Improve the docs** — README clarity, missing setup steps, and typo fixes are all valuable and welcome as small PRs.
-- **Submit code** — bug fixes, new tools (search providers, credibility heuristics), new reasoning/local model backends, or UI improvements.
+- Report a bug: see [SUPPORT.md](SUPPORT.md) and the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md).
+- Suggest a feature: use the [feature request template](.github/ISSUE_TEMPLATE/feature_request.md).
+- Improve the docs: README clarity, missing setup steps, and typo fixes are all valuable and welcome as small PRs.
+- Submit code: bug fixes, new tools (search providers, credibility heuristics), new reasoning/local model backends, or UI improvements.
 
 No contribution is too small. If you're unsure whether something is worth a PR, open an issue first and ask.
 
@@ -37,8 +37,8 @@ uv run ruff check .
 ## Development workflow
 
 1. Fork the repo and create a branch from `main`.
-2. Make your change. Keep it focused — a PR that does one thing is much easier to review than one that mixes a bug fix with a refactor.
-3. Test it manually against the running app (there is currently no automated test suite — see below).
+2. Make your change. Keep it focused: a PR that does one thing is much easier to review than one that mixes a bug fix with a refactor.
+3. Test it manually against the running app (there is currently no automated test suite; see below).
 4. Update the README or other docs if your change affects setup, configuration, or user-facing behavior.
 5. Open a PR using the [pull request template](.github/PULL_REQUEST_TEMPLATE.md), describing what changed and why.
 
@@ -51,14 +51,14 @@ See the [README's Project Structure section](README.md#project-structure) for a 
 There is no automated test suite in this repository today. If you're adding non-trivial logic (a new scoring heuristic, a new tool, a state-machine change), please:
 
 - Test it manually by running a real research query end-to-end.
-- Consider adding a small `pytest` test alongside your change if it's a pure function (e.g. something in `tools/credibility.py`) — this is welcomed but not required.
+- Consider adding a small `pytest` test alongside your change if it's a pure function (e.g. something in `tools/credibility.py`). This is welcomed but not required.
 
 ## Code style
 
 - Match the existing style in the file you're editing.
 - Keep functions small and single-purpose, consistent with the existing `agents/` and `tools/` modules.
 - Run `uv run ruff check .` before opening a PR.
-- Avoid adding new dependencies unless there's a clear need — this project intentionally keeps its dependency list small.
+- Avoid adding new dependencies unless there's a clear need; this project intentionally keeps its dependency list small.
 
 ## Reporting security issues
 
@@ -66,4 +66,4 @@ Please do **not** open a public issue for a security vulnerability. See [SECURIT
 
 ## A note on scope
 
-This is a personal, local-first project maintained on a best-effort basis. Response times to issues and PRs will vary — please be patient. See [SUPPORT.md](SUPPORT.md) for what to expect.
+This is a personal, local-first project maintained on a best-effort basis. Response times to issues and PRs will vary, so please be patient. See [SUPPORT.md](SUPPORT.md) for what to expect.

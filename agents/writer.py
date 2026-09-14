@@ -25,6 +25,10 @@ Do not include a title heading or a references section yourself - those are adde
 
 
 def _build_source_digest(sources: list[dict]) -> tuple[str, list[dict]]:
+    # This and `_build_references` must enumerate `included` in the same
+    # order: the model cites [n] against the digest below, and those numbers
+    # only stay correct if writer_node passes the identical, unreordered
+    # `included` list on to `_build_references`.
     included = [s for s in sources if s.get("trust_score", 0) >= config.MIN_TRUST_SCORE]
     lines = []
     for i, s in enumerate(included, start=1):

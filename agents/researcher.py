@@ -46,6 +46,9 @@ def researcher_node(payload: dict) -> dict:
         return {"research_results": [], "errors": errors, "step_count": 1}
 
     llm = get_local(local_model)
+    # Circuit breaker: once the local model fails once, stop retrying it for
+    # the rest of this batch (each retry would re-wait the full timeout) and
+    # fall back to the raw snippet for every remaining source instead.
     local_model_down = False
     results = []
     for source in raw_sources:

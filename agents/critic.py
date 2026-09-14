@@ -53,6 +53,9 @@ def critic_node(state: ResearchState) -> dict:
             },
         }
 
+    # `sources` is the same list, in the same order, that irrelevant_indices
+    # is applied against below - don't resort or filter it between here and
+    # the `drop` computation, or those indices will point at the wrong entries.
     digest_lines = []
     for i, s in enumerate(sources, start=1):
         digest_lines.append(
