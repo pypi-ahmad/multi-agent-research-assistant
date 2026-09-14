@@ -33,6 +33,8 @@ def _dispatch_research(state: ResearchState) -> list[Send]:
 
 
 def _reflect_router(state: ResearchState) -> str | list[Send]:
+    """Route after `reflector`: re-dispatch one `researcher` Send per pending
+    gap, or fall through to `writer` once reflector has stopped the loop."""
     if not state.get("needs_more_research"):
         return "writer"
 
@@ -54,6 +56,9 @@ def _reflect_router(state: ResearchState) -> str | list[Send]:
 def build_graph():
     graph = StateGraph(ResearchState)
 
+    # These node name strings double as event keys in app.py's stream loop
+    # (AGENT_LABELS); renaming a node here won't break the graph but will
+    # silently drop its friendly label in the UI.
     graph.add_node("planner", planner_node)
     graph.add_node("researcher", researcher_node)
     graph.add_node("critic", critic_node)
