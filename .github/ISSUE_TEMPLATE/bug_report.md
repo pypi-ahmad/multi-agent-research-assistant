@@ -29,4 +29,4 @@ If applicable, add screenshots or the relevant terminal/Streamlit output. Please
 - Commit/branch you're running on:
 
 **Additional context**
-Anything else that might help — e.g. whether this happens with every query or only some, whether it started after an update, etc.
+Anything else that might help, e.g. whether this happens with every query or only some, whether it started after an update, etc.
